@@ -90,7 +90,8 @@ data "aws_iam_policy_document" "codebuild" {
     actions = [
       "codebuild:CreateReport",
       "codebuild:UpdateReport",
-      "codebuild:BatchPutTestCases"
+      "codebuild:BatchPutTestCases",
+      "codebuild:CreateReportGroup"
     ]
 
     resources = [
