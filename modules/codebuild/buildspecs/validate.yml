@@ -8,13 +8,40 @@ phases:
       - yum install -y yum-utils
       - yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
       - yum install -y terraform-${TF_VERSION}
+      - curl --location https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip --output tflint_linux_amd64.zip
+      - curl --location https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/checksums.txt --output checksums.txt
+      - file=$(sha256sum tflint_linux_amd64.zip | cut -d" " -f1)
+      - sha=$(grep $file checksums.txt | cut -d" " -f1)
+      - if [ "${file}" = "${sha}" ]; then unzip -o tflint_linux_amd64.zip ; else exit 1 ; fi
+      - python -V
+      - pip3 install checkov
 
   build:
     commands:   
       - cd "$CODEBUILD_SRC_DIR"
       - terraform init -backend=false
       - terraform validate
+      - terraform fmt --recursive --check
+      - tflint --init
+      - tflint
+      - |
+        if [ -z "${CHECKOV_SKIPS}" ]; then 
+          checkov --directory ./ --skip-path ./deploy -o junitxml > checkov.xml
+        else
+          checkov --directory ./ --skip-path ./deploy --skip-check ${CHECKOV_SKIPS} -o junitxml > checkov.xml
+        fi
+      - cat checkov.xml
 
   post_build:
     commands:
       - echo "validate complete"
+      - echo "fmt complete"
+      - echo "lint complete"
+      - echo "sast complete"
+
+  reports:
+    ${SAST_REPORT_ARN}:
+      files:
+        - checkov.xml
+      base-directory: ./
+      file-format: JUNITXML

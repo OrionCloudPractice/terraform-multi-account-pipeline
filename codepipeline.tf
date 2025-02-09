@@ -19,7 +19,7 @@ resource "aws_codepipeline" "this" {
       name             = "Source"
       category         = "Source"
       owner            = "AWS"
-      provider         = "CodeCommit"
+      provider         = "CodeStarSourceConnection"
       version          = "1"
       output_artifacts = ["source_output"]
 
@@ -32,12 +32,10 @@ resource "aws_codepipeline" "this" {
   }
 
   stage {
-    name = "Validation"
+    name = "Validate"
 
-    dynamic "action" {
-      for_each = local.validation_stages
-      content {
-        name            = action.key
+    action {
+        name            = "ci"
         category        = "Build"
         owner           = "AWS"
         provider        = "CodeBuild"
@@ -45,19 +43,16 @@ resource "aws_codepipeline" "this" {
         version         = "1"
 
         configuration = {
-          ProjectName = module.validation[action.key].codebuild_project.name
+          ProjectName = module.validation.codebuild_project.name
         }
       }
     }
-  }
 
   stage {
     name = "Plan"
 
-    dynamic "action" {
-      for_each = var.accounts
-      content {
-        name            = action.key
+    action {
+        name            = "plan"
         category        = "Build"
         owner           = "AWS"
         provider        = "CodeBuild"
@@ -90,7 +85,6 @@ resource "aws_codepipeline" "this" {
         }
       }
     }
-  }
 
   stage {
     name = "Approval"
@@ -111,10 +105,8 @@ resource "aws_codepipeline" "this" {
   stage {
     name = "Apply"
 
-    dynamic "action" {
-      for_each = var.accounts
-      content {
-        name            = action.key
+    action {
+        name            = "apply"
         category        = "Build"
         owner           = "AWS"
         provider        = "CodeBuild"
@@ -148,8 +140,6 @@ resource "aws_codepipeline" "this" {
       }
     }
   }
-
-}
 
 resource "aws_iam_role" "codepipeline" {
   name               = "${var.pipeline_name}-codepipeline"

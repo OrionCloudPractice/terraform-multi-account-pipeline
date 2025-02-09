@@ -3,7 +3,7 @@
 
 locals {
   log_group = "/aws/${var.pipeline_name}"
-
+/*
   validation_stages = {
     validate = var.environment_variables,
     fmt      = var.environment_variables,
@@ -14,6 +14,7 @@ locals {
       var.environment_variables,
     )
   }
+  */
 }
 
 
