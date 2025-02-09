@@ -24,8 +24,9 @@ resource "aws_codepipeline" "this" {
       output_artifacts = ["source_output"]
 
       configuration = {
-        RepositoryName       = var.repo
+        ConnectionArn    = var.connection
         BranchName           = var.branch
+        FullRepositoryId     = var.repo
         #PollForSourceChanges = false
       }
     }
