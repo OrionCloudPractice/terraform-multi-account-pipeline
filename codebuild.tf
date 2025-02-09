@@ -5,10 +5,10 @@ module "validation" {
   source                = "./modules/codebuild"
   codebuild_name        = lower("${var.pipeline_name}-validation")
   codebuild_role        = aws_iam_role.codebuild.arn
-    environment_variables = merge(
+  environment_variables = merge(
     var.environment_variables,
     {
-      SAST_REPORT_ARN = var.aws_codebuild_report_group.arn
+      SAST_REPORT_NAME = aws_codebuild_report_group.sast.name
     })
   build_timeout         = 5
   build_spec            = "validate.yml"

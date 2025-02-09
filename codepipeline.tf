@@ -45,13 +45,6 @@ resource "aws_codepipeline" "this" {
 
         configuration = {
           ProjectName = module.validation.codebuild_project.name
-          EnvironmentVariables = jsonencode([
-            {
-              name  = "SAST_REPORT_ARN"
-              value = aws_codebuild_report_group.sast.arn
-              type  = "PLAINTEXT"
-            }
-          ])
         }
       }
     }

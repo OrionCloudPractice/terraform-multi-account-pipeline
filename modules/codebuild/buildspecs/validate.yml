@@ -42,7 +42,7 @@ phases:
       - echo "Running build for ${SAST_REPORT_ARN}"
 
 reports:
-  ${SAST_REPORT_ARN}:
+  ${SAST_REPORT_NAME}:
     files:
       - checkov.xml
     base-directory: ./
