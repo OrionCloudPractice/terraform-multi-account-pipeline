@@ -38,6 +38,8 @@ phases:
       - echo "fmt complete"
       - echo "lint complete"
       - echo "sast complete"
+      - echo "Running build for ${PIPELINE_NAME}"
+      - echo "Running build for ${SAST_REPORT_ARN}"
 
 reports:
   ${SAST_REPORT_ARN}:
