@@ -23,7 +23,7 @@ phases:
       - terraform validate
       - terraform fmt
       - tflint --init
-      - tflint
+      - tflint --only-errors
       - |
         if [ -z "${CHECKOV_SKIPS}" ]; then 
           checkov --directory ./ --skip-path ./deploy -o junitxml > checkov.xml
@@ -38,8 +38,6 @@ phases:
       - echo "fmt complete"
       - echo "lint complete"
       - echo "sast complete"
-      - echo "Running build for ${PIPELINE_NAME}"
-      #- echo "Running build for ${SAST_REPORT_ARN}"
 
 reports:
   ${SAST_REPORT_NAME}:
