@@ -97,7 +97,7 @@ data "aws_iam_policy_document" "codebuild" {
     resources = [
       #all report groups
       "arn:aws:codebuild:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:report-group/*",
-      #specific repor group
+      #specific report group
       #aws_codebuild_report_group.sast.arn
     ]
   }

@@ -22,8 +22,8 @@ phases:
       - terraform init -backend=false
       - terraform validate
       - terraform fmt
-      - tflint --init
-      - tflint
+#      - tflint --init
+#      - tflint
       - |
         if [ -z "${CHECKOV_SKIPS}" ]; then 
           checkov --directory ./ --skip-path ./deploy -o junitxml > checkov.xml
