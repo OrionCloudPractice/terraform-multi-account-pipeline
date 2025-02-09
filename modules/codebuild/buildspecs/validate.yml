@@ -24,12 +24,7 @@ phases:
       - terraform fmt
 #      - tflint --init
 #      - tflint
-      - |
-        if [ -z "${CHECKOV_SKIPS}" ]; then 
-          checkov --directory ./ --skip-path ./deploy --download-external-modules true --soft-fail -o junitxml > checkov.xml
-        else
-          checkov --directory ./ --skip-path ./deploy --skip-check ${CHECKOV_SKIPS} --download-external-modules true --soft-fail -o junitxml > checkov.xml
-        fi
+      - checkov --directory ./ --skip-path ./deploy --download-external-modules true --soft-fail -o junitxml > checkov.xml
       - cat checkov.xml
 
   post_build:
