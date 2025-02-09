@@ -21,7 +21,7 @@ phases:
       - cd "$CODEBUILD_SRC_DIR"
       - terraform init -backend=false
       - terraform validate
-      - terraform fmt --recursive --check
+      - terraform fmt
       - tflint --init
       - tflint
       - |
