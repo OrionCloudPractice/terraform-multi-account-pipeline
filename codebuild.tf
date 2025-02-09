@@ -3,7 +3,7 @@
 
 module "validation" {
   source                = "./modules/codebuild"
-  codebuild_name        = "${var.pipeline_name}-${each.key}"
+  codebuild_name        = lower("${var.pipeline_name}-validation")
   codebuild_role        = aws_iam_role.codebuild.arn
   environment_variables = var.environment_variables
   build_timeout         = 5
