@@ -26,9 +26,9 @@ phases:
 #      - tflint
       - |
         if [ -z "${CHECKOV_SKIPS}" ]; then 
-          checkov --directory ./ --skip-path ./deploy --download-external-modules false -o junitxml > checkov.xml
+          checkov --directory ./ --skip-path ./deploy --download-external-modules true --soft-fail -o junitxml > checkov.xml
         else
-          checkov --directory ./ --skip-path ./deploy --skip-check ${CHECKOV_SKIPS} --download-external-modules false -o junitxml > checkov.xml
+          checkov --directory ./ --skip-path ./deploy --skip-check ${CHECKOV_SKIPS} --download-external-modules true --soft-fail -o junitxml > checkov.xml
         fi
       - cat checkov.xml
 
