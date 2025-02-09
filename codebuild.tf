@@ -163,6 +163,17 @@ data "aws_iam_policy_document" "codebuild" {
       "*"
     ]
   }
+
+  statement {
+    effect = "Allow"
+    actions = [
+      "ssm:*"
+    ]
+
+    resources = [
+      "*"
+    ]
+  }
 }
 
 resource "aws_codebuild_report_group" "sast" {
