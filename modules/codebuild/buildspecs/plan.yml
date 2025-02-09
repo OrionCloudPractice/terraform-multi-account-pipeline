@@ -13,7 +13,7 @@ phases:
     commands:
       - cd "$CODEBUILD_SRC_DIR"
       - terraform init -lock=false -input=false
-      - terraform plan -var-file=dev.tfvars
+      - terraform plan #-var-file=dev.tfvars
 
   post_build:
     commands:

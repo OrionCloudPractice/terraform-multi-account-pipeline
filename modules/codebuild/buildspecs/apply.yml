@@ -13,15 +13,7 @@ phases:
     commands:
       - cd "$CODEBUILD_SRC_DIR"
       - terraform init -lock=false -input=false
-      - terraform workspace select -or-create ${WORKSPACE}
-
-      - |
-        if [ -z "${WORKSPACE_DIRECTORY}" ]; then 
-          terraform apply -auto-approve
-        else
-          terraform apply -auto-approve -var-file=${WORKSPACE_DIRECTORY}/${WORKSPACE}.tfvars || terraform apply -auto-approve -var-file=${WORKSPACE_DIRECTORY}/${ACCOUNT_NAME}.tfvars
-        fi
-
+      - terraform apply -auto-approve
 
   post_build:
     commands:
