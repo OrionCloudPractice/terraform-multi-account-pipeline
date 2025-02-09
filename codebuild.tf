@@ -179,7 +179,9 @@ data "aws_iam_policy_document" "codebuild" {
       "ec2:*",
       "ecs:*",
       "logs:*",
-      "iam:*"
+      "iam:*",
+      "elasticloadbalancing:*",
+      "cloudfront:*"
     ]
 
     resources = [
