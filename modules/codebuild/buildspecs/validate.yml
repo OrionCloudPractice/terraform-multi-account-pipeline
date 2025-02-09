@@ -39,9 +39,9 @@ phases:
       - echo "lint complete"
       - echo "sast complete"
 
-  reports:
-    ${SAST_REPORT_ARN}:
-      files:
-        - checkov.xml
-      base-directory: ./
-      file-format: JUNITXML
+reports:
+  ${SAST_REPORT_ARN}:
+    files:
+      - checkov.xml
+    base-directory: ./
+    file-format: JUNITXML
