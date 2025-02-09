@@ -26,7 +26,7 @@ resource "aws_codepipeline" "this" {
       configuration = {
         RepositoryName       = var.repo
         BranchName           = var.branch
-        PollForSourceChanges = false
+        #PollForSourceChanges = false
       }
     }
   }
