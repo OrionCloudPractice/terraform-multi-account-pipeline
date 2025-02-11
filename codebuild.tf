@@ -128,9 +128,7 @@ data "aws_iam_policy_document" "codebuild" {
   statement {
     effect = "Allow"
     actions = [
-      "dynamodb:GetItem",
-      "dynamodb:PutItem",
-      "dynamodb:DeleteItem"
+      "dynamodb:*"
     ]
 
     resources = [
