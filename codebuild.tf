@@ -181,7 +181,8 @@ data "aws_iam_policy_document" "codebuild" {
       "elasticloadbalancing:*",
       "cloudfront:*",
       "application-autoscaling:*",
-      "ecr:*"
+      "ecr:*",
+      "wafv2:*"
     ]
 
     resources = [
