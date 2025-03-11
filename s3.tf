@@ -59,10 +59,15 @@ resource "aws_s3_bucket_lifecycle_configuration" "this" {
   bucket = aws_s3_bucket.this.id
 
   rule {
+    id     = "expire-old-files"
     status = "Enabled"
-    id     = "90-days"
+
+    filter {
+      prefix = ""
+    }
+
     expiration {
-      days = 90
+      days = 30
     }
 
   }
